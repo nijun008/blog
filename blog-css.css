@@ -1,2 +1,16 @@
 /*博客样式*/
 
+body{
+  padding-top: 50px;
+}
+#content-w{
+  padding: 0;
+  position: relative;
+}
+.content{
+  position: absolute;
+  display: none;
+}
+.cont-act{
+  display: block;
+}
