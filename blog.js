@@ -30,6 +30,13 @@ http.createServer(function (req,res) {
       res.write(data);
       res.end();
       })
+  } else if(pathname == '/controller.js') {  //响应controller
+    fs.readFile('./controller.js','UTF-8',function (err,data) {
+      if(err) throw err;
+      res.writeHead(200,{'Content-Type':'application/javascript'});
+      res.write(data);
+      res.end();
+      })
   } else {
     res.end('404 NOT FOUND');
   }
