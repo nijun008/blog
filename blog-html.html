@@ -55,8 +55,8 @@
       <div class="article-box" ng-repeat="art in arts">
         <h4><a href="#">{{art.title}}</a></h4>
         <p>{{art.author}} {{art.time}} 标签:{{art.tag}}</p>
-        <p>{{art.txt}}</p>
-        <a href="#">展开全文</a>
+        <p class="txt">{{art.txt}}</p>
+        <a class="more" href="#">展开全文</a>
       </div>
     </div>
 
@@ -65,8 +65,8 @@
       <div class="article-box" ng-repeat="webart in webarts">
         <h4><a href="#">{{webart.title}}</a></h4>
         <p>{{webart.author}} {{webart.time}} 标签:{{webart.tag}}</p>
-        <p>{{webart.txt}}</p>
-        <a href="#">展开全文</a>
+        <p class="txt">{{webart.txt}}</p>
+        <a class="more" href="#">展开全文</a>
       </div>
     </div>
 
@@ -75,13 +75,19 @@
       <div class="article-box" ng-repeat="noteart in notearts">
         <h4><a href="#">{{noteart.title}}</a></h4>
         <p>{{noteart.author}} {{noteart.time}} 标签:{{noteart.tag}}</p>
-        <p>{{noteart.txt}}</p>
-        <a href="#">展开全文</a>
+        <p class="txt">{{noteart.txt}}</p>
+        <a class="more" href="#">展开全文</a>
       </div>
     </div>
 
-    <div class="container content" id="life"><!-- 生活 -->
+    <div class="container content" id="life" ng-controller="lifecrtl"><!-- 生活 -->
       生活
+      <div class="article-box" ng-repeat="lifeart in lifearts">
+        <h4><a href="#">{{lifeart.title}}</a></h4>
+        <p>{{lifeart.author}} {{lifeart.time}} 标签:{{lifeart.tag}}</p>
+        <p class="txt">{{lifeart.txt}}</p>
+        <a class="more" href="#">展开全文</a>
+      </div>
     </div>
 
     <div class="container content" id="search"><!-- 搜索结果 -->

@@ -1,7 +1,8 @@
 /*博客JS*/
 
-//
+
 $(function() {
+  //内容切换
   $(".cont-a").click(function() {
     $(".cont-a").removeClass("active");
     $(this).addClass("active");
@@ -21,4 +22,16 @@ $(function() {
       $(".content").eq(5).show();
     }
   });
+
+  //展开/收起全文
+  $(".more").click(function() {
+    if($(this).html() == "展开全文") {
+      $(this).prev().css("height","auto");
+      $(this).html("收起全文");
+    } else {
+      $(this).prev().css("height","3em");
+      $(this).html("展开全文");
+    }
+  });
 });
+
