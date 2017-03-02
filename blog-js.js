@@ -33,5 +33,17 @@ $(function() {
       $(this).html("展开全文");
     }
   });
+  //点击标题
+  $(".art-title").click(function() {
+    if($(this).parent().parent().children('.more').html() == "展开全文") {
+      $(this).parent().parent().children('.txt').css("height","auto");
+      $(this).parent().parent().children(".more").html("收起全文");
+    } else {
+      $(this).parent().parent().children('.txt').css("height","3em");
+      $(this).parent().parent().children(".more").html("展开全文");
+    }
+  });
+
+
 });
 
