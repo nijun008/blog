@@ -1,18 +1,15 @@
 /*博客样式*/
 
-body{
-  padding-top: 60px;
-  font-style: "微软雅黑";
-}
+
 a:focus {
 outline: none;
 }
 #content-w{
   padding: 0;
   position: relative;
+
 }
 .content{
-  position: absolute;
   display: none;
 }
 .cont-act{
@@ -21,4 +18,13 @@ outline: none;
 .txt{
   height: 3em;
   overflow: hidden;
+}
+#login-box{
+  padding: 15%;
+}
+.login-lab{
+  margin-left: 13px;
+}
+.modal-title{
+  text-align: center;
 }

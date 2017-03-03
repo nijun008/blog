@@ -2,6 +2,8 @@
 
 
 $(function() {
+
+  
   //内容切换
   $(".cont-a").click(function() {
     $(".cont-a").removeClass("active");
@@ -18,8 +20,6 @@ $(function() {
       $(".content").eq(3).show();
     } else if(this == cont_a[4]) {
       $(".content").eq(4).show();
-    } else {
-      $(".content").eq(5).show();
     }
   });
 
@@ -43,7 +43,6 @@ $(function() {
       $(this).parent().parent().children(".more").html("展开全文");
     }
   });
-
 
 });
 
