@@ -20,6 +20,8 @@ $(function() {
       $(".content").eq(3).show();
     } else if(this == cont_a[4]) {
       $(".content").eq(4).show();
+    } else {
+      $(".content").eq(5).show();
     }
   });
 
