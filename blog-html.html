@@ -90,17 +90,17 @@
 
     <div class="container content" id="new-art"><!-- 新建博文 -->
       <div>
-      <label class="login-lab" for="exampleInputEmail1">文章标题</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="文章标题">
+      <label class="login-lab" for="edi-art-title">文章标题</label>
+        <input type="email" class="form-control" id="edi-art-title" placeholder="文章标题">
       </div>
       <p></p>
       <form class="form-inline">
         <div class="form-group">
-          <label class="login-lab" for="exampleInputPassword1">作者/来源</label>
-          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="作者/来源">
+          <label class="login-lab" for="edi-art-author">作者/来源</label>
+          <input type="text" class="form-control" id="edi-art-author" placeholder="作者/来源">
         </div>
-         <label class="login-lab" for="select-tag">文章标签</label>
-         <select class="form-control" id="select-tag">
+         <label class="login-lab" for="edi-art-tag">文章标签</label>
+         <select class="form-control" id="edi-art-tag">
           <option></option>
           <option>HTML/CSS</option>
           <option>JavaScript</option>
@@ -108,13 +108,13 @@
         </select>
         <p></p>
       </form>
-      <textarea name="addart" id="addart"></textarea>
+      <textarea name="edi_art_txt" id="edi_art_txt"></textarea>
       <script type="text/javascript">
-        CKEDITOR.replace('addart');
+        CKEDITOR.replace('edi_art_txt');
       </script>
       <p></p>
-      <button type="button" class="btn btn-primary">保&nbsp;存</button>
-      <button type="button" class="btn btn-danger">取&nbsp;消</button>
+      <button type="button" class="btn btn-primary" id="edi-submit">保&nbsp;存</button>
+      <button type="button" class="btn btn-danger" id="edi-cancel">取&nbsp;消</button>
     </div>
 
   </div><!-- 内容盒子 -->
@@ -167,10 +167,6 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-
-  
-
-  
 
   <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>

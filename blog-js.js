@@ -46,5 +46,50 @@ $(function() {
     }
   });
 
+  //新建博文保存
+  $("#edi-submit").click(function () {
+    var art_title = $("#edi-art-title").val();
+    var art_author = $("#edi-art-author").val();
+    var art_tag = $("#edi-art-tag").val();
+    var art_time = artgettime(new Date()); 
+    var art_txt = CKEDITOR.instances.edi_art_txt.getData();
+    var art = getart(art_title,art_author,art_tag,art_time,art_txt);
+    var JSONart = JSON.stringify(art);
+    console.log(JSONart);
+    $.ajax({
+      type:"POST",
+      url:"http://127.0.0.1:3000/ediart",
+      data:JSONart,
+      contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+      dataType:"text",
+      success:function (data) {
+        console.log(data);
+      }
+    })
+  });
+
+  //新建博文对象
+  function getart(title,author,tag,time,txt){
+    var newart = {
+      "title":title,
+      "author":author,
+      "tag":tag,
+      "time":time,
+      "txt":txt,
+    }
+    return newart;
+  }
+
+  //获取年-月-日 小时：分钟 格式的时间
+  function artgettime(date){
+    var date_year = date.getFullYear();
+    var date_month = date.getMonth() + 1;
+    var date_date = date.getDate();
+    var date_hours = date.getHours();
+    var date_minutes = date.getMinutes();
+    return date_year + "-" + date_month + "-" + date_date + " " + date_hours + ":" + date_minutes
+  }
+
+
 });
 
