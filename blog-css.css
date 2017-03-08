@@ -1,13 +1,68 @@
 /*博客样式*/
 
-
+body{
+  padding-bottom: 50px;
+}
 a:focus {
 outline: none;
 }
+/*文章部分*/
+.article-box{
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+  /*margin-right: 170px;*/
+}
+.art-title:link{
+  color: #0063b1;
+  text-decoration: none;
+}
+.art-title:visited{
+  color: #0063b1;
+  text-decoration: none;
+}
+.art-title:hover{
+  color: #0063b1;
+  text-decoration: none;
+}
+.art-title:active{
+  color: #0063b1;
+  text-decoration: none;
+}
+.info{
+  color: gray;
+  margin-bottom: 30px;
+  margin-top: 25px;
+}
+.txt{
+  height: 3.5em;
+  overflow: hidden;
+}
+.more:link{
+  font-size: 12px;
+  color: gray;
+  text-decoration: none;
+}
+.more:visited{
+  color: gray;
+  text-decoration: none;
+}
+.more:hover{
+  color: #3399ff;
+  text-decoration: none;
+}
+.more:active{
+  color: gray;
+  text-decoration: none;
+}
+blockquote{
+  background-color: #eee;
+}
+
+
+
 #content-w{
   padding: 0;
-  position: relative;
-
 }
 .content{
   display: none;
@@ -15,13 +70,19 @@ outline: none;
 .cont-act{
   display: block;
 }
-.txt{
-  height: 3em;
-  overflow: hidden;
-}
 .login-lab{
   margin-left: 13px;
 }
 .modal-title{
   text-align: center;
+}
+/*新建博文按钮*/
+#newart{
+  display: none;
+}
+
+#canvas{
+  width: 150px;
+  height: 150px;
+  float: right;
 }

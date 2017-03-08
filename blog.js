@@ -9,9 +9,11 @@ var url = require('url');
 var MongoClient = require('mongodb').MongoClient;
 var blogdb = 'mongodb://localhost:27017/blog';
 
+var sortid = 1;
+
 //插入数据
 var inserData = function (db,data,callback) {
-  var collection = db.collection('other');
+  var collection = db.collection('art');
   collection.insert(data,function (err,result) {
     if(err){
       console.log(err);
@@ -21,16 +23,26 @@ var inserData = function (db,data,callback) {
   })
 }
 //查找数据
-var selectData = function(db,callback) {
-  var collection =db.collection('other');
-  var whereStr = {"tag":"其他相关"};
-  collection.find(whereStr).toArray(function (err,result) {
-    if(err) {
-      console.log(err);
-      return;
+var selectData = function(db,tag,callback) {
+  var collection =db.collection('art');
+  if(tag==""){    //查找全部
+    collection.find().sort({"sortid":-1}).toArray(function (err,result) {
+      if(err) {
+        console.log(err);
+        return;
+      }
+      callback(result);
+    });
+  } else{ //按标签查找
+      var whereStr = {"tag":tag};
+      collection.find(whereStr).sort({"sortid":-1}).toArray(function (err,result) {
+        if(err) {
+          console.log(err);
+          return;
+        }
+        callback(result);
+      });
     }
-    callback(result);
-  });
 }
 
 http.createServer(function (req,res) {
@@ -75,31 +87,46 @@ http.createServer(function (req,res) {
     req.on("data",function(chunk){  
         data += chunk;
     });
-    req.on("end",function(){  
+    req.on("end",function(){
         data = JSON.parse(data);
-        console.log(data);
+        data.sortid = sortid;
+        sortid++;
         MongoClient.connect(blogdb,function (err,db) {
           inserData(db,data,function (result) {
-            console.log(result);
             db.close();
+            res.setHeader('Access-Control-Allow-Origin', '*');
             res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
             res.write("OK");
             res.end();
           })
         })
     });
-  } else if(pathname == '/other') {
+  } else if(pathname == '/home') {  //更新首页文章
     MongoClient.connect(blogdb,function (err,db) {
       console.log("连接成功");
-      selectData(db,function (result) {
-        console.log(result);
+      selectData(db,"",function (result) {
         db.close();
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
+        res.write(JSON.stringify(result));
+        res.end();
+      })
+    })
+  } else if(pathname == '/html/css' || '/javascript' || '/other') {  //更新各个标签文章
+    MongoClient.connect(blogdb,function (err,db) {
+      console.log("连接成功");
+      var tag = pathname.substr(1);
+      selectData(db,tag,function (result) {
+        db.close();
+        res.setHeader('Access-Control-Allow-Origin', '*');
         res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
         res.write(JSON.stringify(result));
         res.end();
       })
     })
   } else {
-    res.end('404 NOT FOUND');
+    res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
+    res.write("404 NOT FOUND");
+    res.end();
   }
 }).listen(3000);

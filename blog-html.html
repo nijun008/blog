@@ -1,7 +1,7 @@
 <!-- 博客HTML -->
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="mainApp">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ID=edge">
@@ -12,7 +12,7 @@
   <!-- <script src="../../ckeditor/ckeditor.js"></script> -->
   <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
 </head>
-<body>
+<body ng-controller="updata">
 
   <nav class="navbar navbar-inverse con"><!-- 导航 -->
     <div class="container">
@@ -24,67 +24,64 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">nijun</a>
+        <a href="javascript:void(0)" class="navbar-brand">nijun</a>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active cont-a"><a href="#">首页<span class="sr-only">(current)</span></a></li>
-          <li class="cont-a"><a href="#">HTML/CSS</a></li>
-          <li class="cont-a"><a href="#">JavaScript</a></li>
-          <li class="cont-a"><a href="#">其他相关</a></li>
+          <li class="active cont-a"><a href="javascript:void(0)" ng-click="uphome()">首页<span class="sr-only">(current)</span></a></li>
+          <li class="cont-a"><a href="javascript:void(0)" ng-click="uphtml()">HTML/CSS</a></li>
+          <li class="cont-a"><a href="javascript:void(0)" ng-click="upjs()">JavaScript</a></li>
+          <li class="cont-a"><a href="javascript:void(0)" ng-click="upother()">其他相关</a></li>
           
         </ul>
         
         <ul class="nav navbar-nav navbar-right">
-          <li class="cont-a"><a href="#">新建博文</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#callme">联系我</a></li>
-          <li><a href="#" data-toggle="modal" data-target="#login">登录</a></li>
+          <li class="cont-a"><a href="javascript:void(0)" id="newart">新建博文</a></li>
+          <li><a href="javascript:void(0)" data-toggle="modal" data-target="#callme">联系我</a></li>
+          <li><a href="javascript:void(0)" data-toggle="modal" data-target="#login">登录</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav><!-- 导航 -->
 
-  <div class="container" id="content-w" ng-app="mainApp"><!-- 内容盒子 -->
+  <div class="container" id="content-w"><!-- 内容盒子 -->
 
-    <div class="container content cont-act" id="home" ng-controller="homecrtl"><!-- 首页 -->
-      首页
+    <canvas id="canvas"></canvas>
+
+    <div class="container content cont-act" id="home"><!-- 首页 -->
       <div class="article-box" ng-repeat="art in arts">
-        <h4><a class="art-title" href="#">{{art.title}}</a></h4>
-        <p>{{art.author}} {{art.time}} 标签:{{art.tag}}</p>
-        <p class="txt">{{art.txt}}</p>
-        <a class="more" href="#">展开全文</a>
+        <h4><a class="art-title" href="javascript:void(0)">{{art.title}}</a></h4>
+        <p class="info">{{art.author}}&nbsp;&nbsp; &nbsp;{{art.time}}&nbsp; &nbsp;标签:{{art.tag}}&nbsp; &nbsp;文章id:{{art._id}}</p>
+        <p class="txt" ng-bind-html="art.txt | trustHtml"></p>
+        <a class="more" href="javascript:void(0)">展开全文</a>
       </div>
     </div>
 
-    <div class="container content" id="html" ng-controller="htmlcrtl"><!-- HTML/CSS -->
-      HTML/CSS
+    <div class="container content" id="html/css"><!-- HTML/CSS -->
       <div class="article-box" ng-repeat="htmlart in htmlarts">
-        <h4><a class="art-title" href="#">{{htmlart.title}}</a></h4>
-        <p>{{htmlart.author}} {{htmlart.time}} 标签:{{htmlart.tag}}</p>
-        <p class="txt">{{htmlart.txt}}</p>
-        <a class="more" href="#">展开全文</a>
+        <h4><a class="art-title" href="javascript:void(0)">{{htmlart.title}}</a></h4>
+        <p class="info">{{htmlart.author}}&nbsp; &nbsp;&nbsp;{{htmlart.time}}&nbsp;&nbsp; 标签:{{htmlart.tag}}&nbsp;&nbsp;文章id:{{htmlart._id}}</p>
+        <p class="txt" ng-bind-html="htmlart.txt | trustHtml"></p>
+        <a class="more" href="javascript:void(0)">展开全文</a>
       </div>
     </div>
-
-    <div class="container content" id="js" ng-controller="jscrtl"><!-- JS -->
-      JS
+    <div class="container content" id="javascript"><!-- JS -->
       <div class="article-box" ng-repeat="jsart in jsarts">
-        <h4><a class="art-title" href="#">{{jsart.title}}</a></h4>
-        <p>{{jsart.author}} {{jsart.time}} 标签:{{jsart.tag}}</p>
-        <p class="txt">{{jsart.txt}}</p>
-        <a class="more" href="#">展开全文</a>
+        <h4><a class="art-title" href="javascript:void(0)">{{jsart.title}}</a></h4>
+        <p class="info">{{jsart.author}}&nbsp; &nbsp;&nbsp;{{jsart.time}} &nbsp;&nbsp;标签:{{jsart.tag}}&nbsp;&nbsp;文章id:{{jsart._id}}</p>
+        <p class="txt" ng-bind-html="jsart.txt | trustHtml"></p>
+        <a class="more" href="javascript:void(0)">展开全文</a>
       </div>
     </div>
 
-    <div class="container content" id="life" ng-controller="othercrtl"><!-- 其他 -->
-      其他
+    <div class="container content" id="other"><!-- 其他 -->
       <div class="article-box" ng-repeat="otherart in otherarts">
-        <h4><a class="art-title" href="#">{{otherart.title}}</a></h4>
-        <p>{{otherart.author}} {{otherart.time}} 标签:{{otherart.tag}}</p>
-        <p class="txt">{{otherart.txt}}</p>
-        <a class="more" href="#">展开全文</a>
+        <h4><a class="art-title" href="javascript:void(0)">{{otherart.title}}</a></h4>
+        <p class="info">{{otherart.author}}&nbsp;&nbsp; &nbsp;{{otherart.time}}&nbsp;&nbsp; 标签:{{otherart.tag}}&nbsp;&nbsp;文章id:{{otherart._id}}</p>
+        <p class="txt" ng-bind-html="otherart.txt | trustHtml"></p>
+        <a class="more" href="javascript:void(0)">展开全文</a>
       </div>
     </div>
 
@@ -101,10 +98,9 @@
         </div>
          <label class="login-lab" for="edi-art-tag">文章标签</label>
          <select class="form-control" id="edi-art-tag">
-          <option></option>
-          <option>HTML/CSS</option>
-          <option>JavaScript</option>
-          <option>其他相关</option>
+          <option>html/css</option>
+          <option>javascript</option>
+          <option>other</option>
         </select>
         <p></p>
       </form>
@@ -113,7 +109,7 @@
         CKEDITOR.replace('edi_art_txt');
       </script>
       <p></p>
-      <button type="button" class="btn btn-primary" id="edi-submit">保&nbsp;存</button>
+      <button type="button" class="btn btn-primary" ng-click="uphome" id="edi-submit">保&nbsp;存</button>
       <button type="button" class="btn btn-danger" id="edi-cancel">取&nbsp;消</button>
     </div>
 
