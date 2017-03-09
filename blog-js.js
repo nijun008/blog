@@ -119,6 +119,100 @@ $(function() {
   });
   },1500);
 
+  //绘制时钟
+  var canvas = document.getElementById("clock");
+  var clock = canvas.getContext('2d');
+  function canvasClock() {
+    //清除画布
+    clock.clearRect(0,0,150,150);
+    //获取时间
+    var now = new Date();
+    var secd = now.getSeconds();
+    var min = now.getMinutes();
+    var hour = now.getHours();
+    hour = hour + (min / 60);           //浮点型小时
+    hour = hour > 12 ? hour - 12 : hour;//12小时制
+    //表盘
+    clock.beginPath();
+    clock.lineWidth = 1;
+    clock.strokeStyle = "#000";
+    clock.arc(75,75,73,0,360,false);
+    clock.stroke();
+    clock.closePath();
+    //时刻度
+    for(var i=0;i<12;i++) {
+      clock.save();
+      clock.lineWidth = 1;
+      clock.strokeStyle = "#000";
+      clock.translate(75,75);
+      clock.rotate(i*30*Math.PI/180);
+      clock.beginPath();
+      clock.moveTo(0,-58);
+      clock.lineTo(0,-70);
+      clock.stroke();
+      clock.closePath();
+      clock.restore();
+    }
+    //分刻度
+    for (var i = 0; i < 60; i++) {
+      clock.save();
+      clock.lineWidth = 1;
+      clock.strokeStyle = "#333";
+      clock.translate(75, 75);
+      clock.rotate((i * 6) * Math.PI / 180);
+      clock.beginPath();
+      clock.moveTo(0,-66);
+      clock.lineTo(0,-70);
+      clock.closePath();
+      clock.stroke();
+      clock.restore();
+    }
+    //时针
+    clock.save();
+    clock.lineWidth = 4;
+    clock.strokeStyle = "#000";
+    clock.translate(75, 75);
+    clock.rotate(hour * 30 * Math.PI / 180);
+    clock.beginPath();
+    clock.moveTo(0, -40);
+    clock.lineTo(0, 1);
+    clock.stroke();
+    clock.closePath();
+    clock.restore();
+    //分针
+    clock.save();
+    clock.lineWidth = 3;
+    clock.strokeStyle = "#000";
+    clock.translate(75, 75);
+    clock.rotate(min * 6 * Math.PI / 180);
+    clock.beginPath();
+    clock.moveTo(0, -53);
+    clock.lineTo(0, 1);
+    clock.stroke();
+    clock.closePath();
+    clock.restore();
+    //秒针
+    clock.save();
+    clock.lineWidth = 2;
+    clock.strokeStyle = "#bd2d30";
+    clock.translate(75, 75);
+    clock.rotate(secd * 6 * Math.PI / 180);
+    clock.beginPath();
+    clock.moveTo(0, -60);
+    clock.lineTo(0, 1);
+    clock.closePath();
+    clock.stroke();
+    //指针交叉点
+    clock.beginPath();
+    clock.arc(0, 0, 3, 0, 360, false);
+    clock.closePath();
+    clock.fillStyle = "#bd2d3o";
+    clock.fill();
+    clock.stroke();
 
-
+    clock.restore();
+  }
+  canvasClock();
+  setInterval(canvasClock,1000);
+  
 });

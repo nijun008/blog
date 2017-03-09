@@ -2,9 +2,17 @@
 
 body{
   padding-bottom: 50px;
+  font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+  background-color: #f6f6f6;
 }
 a:focus {
 outline: none;
+}
+.navbar{
+  border-radius: 0;
+}
+.navbar a{
+  font-weight: 600;
 }
 /*文章部分*/
 .article-box{
@@ -14,19 +22,21 @@ outline: none;
   /*margin-right: 170px;*/
 }
 .art-title:link{
-  color: #0063b1;
+  color: #225599;
   text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
 }
 .art-title:visited{
-  color: #0063b1;
+  color: #225599;
   text-decoration: none;
 }
 .art-title:hover{
-  color: #0063b1;
+  color: #225599;
   text-decoration: none;
 }
 .art-title:active{
-  color: #0063b1;
+  color: #225599;
   text-decoration: none;
 }
 .info{
@@ -66,6 +76,7 @@ blockquote{
 }
 .content{
   display: none;
+  padding-right: 190px;
 }
 .cont-act{
   display: block;
@@ -81,8 +92,21 @@ blockquote{
   display: none;
 }
 
-#canvas{
-  width: 150px;
-  height: 150px;
+#clock{
   float: right;
+  background-color: #f6f6f6;
+  margin-right: 20px;
+  display: block;
+}
+
+/*媒体查询*/
+@media screen and (max-width: 768px) {
+  .content{
+    padding-right: 15px;
+  }
+  #clock{
+    /*display: none;*/
+    float: none;
+    margin: auto;
+  }
 }
