@@ -11,14 +11,12 @@ mainApp.controller("updata",function ($scope,$http,$sce) {
       $scope.arts = data;
     })
   $scope.uphome = function () {
-    setTimeout(function () {  //延迟发起$http，以便更新刚创建的文章
-      $http({
-        url:'http://www.nijun.top:3000/home',
-        method:'get',
-      }).success(function (data,header,config,status) {
-        $scope.arts = data;
-      });
-    },500);
+    $http({
+      url:'http://www.nijun.top:3000/home',
+      method:'get',
+    }).success(function (data,header,config,status) {
+      $scope.arts = data;
+    });
   }
   $scope.uphtml = function () {
     $http({

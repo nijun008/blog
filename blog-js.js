@@ -56,6 +56,43 @@ $(function() {
   //     $(this).parent().parent().children(".more").html("展开全文");
   //   }
   // });
+  
+  //登录
+  $("#login-submit").click(function () {
+    var user = {
+      "username":$("#username").val(),
+      "password":$("#password").val()
+    }
+    $.ajax({
+      type:"POST",
+      url:"http://www.nijun.top:3000/login",
+      data:user,
+      contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+      dataType:"text",
+      success:function (data) {
+        if(data=="success") {
+          $('#login').modal('hide');
+          $("#login-btn").hide();
+          $("#callme-btn").hide();
+          $("#newart").css({"display":"block"}).show();
+          $("#exit-btn").css({"display":"block"}).show();
+          var local = window.localStorage;
+          local.username=user.username;
+          local.password=user.password;
+        }else{
+          console.log(data);
+        }
+      }
+    })
+  });
+  //退出
+  $("#exit-btn").click(function (){
+    $("#newart").hide();
+    $("#exit-btn").hide();
+    $("#login-btn").show();
+    $("#callme-btn").show();
+    window.localStorage.clear();
+  });
 
   //新建博文保存
   $("#edi-submit").click(function () {
@@ -66,7 +103,6 @@ $(function() {
     var art_txt = CKEDITOR.instances.edi_art_txt.getData();
     var art = getart(art_title,art_author,art_tag,art_time,art_txt);
     var JSONart = JSON.stringify(art);
-    console.log(JSONart);
     $.ajax({
       type:"POST",
       url:"http://www.nijun.top:3000/ediart",
@@ -79,6 +115,8 @@ $(function() {
           $("#new-art").hide();
           $("#home").show();
           $(".cont-a").eq(0).addClass("active");
+        }else{
+          //用户验证没有通过
         }
       }
     })
@@ -92,6 +130,8 @@ $(function() {
       "tag":tag,
       "time":time,
       "txt":txt,
+      "username":window.localStorage.username,
+      "password":window.localStorage.password
     }
     return newart;
   }

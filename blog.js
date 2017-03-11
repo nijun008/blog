@@ -6,10 +6,15 @@ npm version 4.4.2
 var http = require('http');
 var fs = require('fs');
 var url = require('url');
+var querystring = require('querystring');
 var MongoClient = require('mongodb').MongoClient;
 var blogdb = 'mongodb://localhost:27017/blog';
 
-var sortid = 1;
+var sortid = 4; //文章排序id
+var user = {    //账户
+  username:"nijun",
+  password:"jiuhao123"
+}
 
 //插入数据
 var inserData = function (db,data,callback) {
@@ -68,13 +73,23 @@ http.createServer(function (req,res) {
       res.write(data);
       res.end();
       })
-  } else if(pathname == '/sanitize.min.js') {  //响应js
-    fs.readFile('./sanitize.min.js','UTF-8',function (err,data) {
-      if(err) throw err;
-      res.writeHead(200,{'Content-Type':'application/javascript'});
-      res.write(data);
-      res.end();
-      })
+  } else if(pathname == '/login') {  //响应登录
+    var data = "";
+    req.on("data",function(chunk){  
+      data += chunk;
+    });
+    req.on("end",function(){
+      data = querystring.parse(data);
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
+      if(data.username == user.username && data.password == user.password) {
+        res.write("success");
+        res.end();
+      }else{
+        res.write("wrong");
+        res.end();
+      }
+    });
   } else if(pathname == '/controller.js') {  //响应controller
     fs.readFile('./controller.js','UTF-8',function (err,data) {
       if(err) throw err;
@@ -89,21 +104,27 @@ http.createServer(function (req,res) {
     });
     req.on("end",function(){
         data = JSON.parse(data);
-        data.sortid = sortid;
-        sortid++;
-        MongoClient.connect(blogdb,function (err,db) {
-          inserData(db,data,function (result) {
-            db.close();
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
-            res.write("OK");
-            res.end();
+        if(data.username == user.username && data.password == user.password){
+          data.sortid = sortid;
+          sortid++;
+          MongoClient.connect(blogdb,function (err,db) {
+            inserData(db,data,function (result) {
+              db.close();
+              res.setHeader('Access-Control-Allow-Origin', '*');
+              res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
+              res.write("OK");
+              res.end();
+            })
           })
-        })
+        }else{
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
+          res.write("用户验证出错");
+          res.end();
+        }
     });
   } else if(pathname == '/home') {  //更新首页文章
     MongoClient.connect(blogdb,function (err,db) {
-      console.log("连接成功");
       selectData(db,"",function (result) {
         db.close();
         res.setHeader('Access-Control-Allow-Origin', '*');
@@ -114,7 +135,6 @@ http.createServer(function (req,res) {
     })
   } else if(pathname == '/html/css' || '/javascript' || '/other') {  //更新各个标签文章
     MongoClient.connect(blogdb,function (err,db) {
-      console.log("连接成功");
       var tag = pathname.substr(1);
       selectData(db,tag,function (result) {
         db.close();

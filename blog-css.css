@@ -87,8 +87,8 @@ blockquote{
 .modal-title{
   text-align: center;
 }
-/*新建博文按钮*/
-#newart{
+/*新建博文按钮,退出按钮*/
+#newart,#exit-btn{
   display: none;
 }
 
