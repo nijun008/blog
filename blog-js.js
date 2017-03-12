@@ -65,7 +65,7 @@ $(function() {
     }
     $.ajax({
       type:"POST",
-      url:"http://www.nijun.top:3000/login",
+      url:"http://127.0.0.1/login",
       data:user,
       contentType:"application/x-www-form-urlencoded; charset=UTF-8",
       dataType:"text",
@@ -105,7 +105,7 @@ $(function() {
     var JSONart = JSON.stringify(art);
     $.ajax({
       type:"POST",
-      url:"http://www.nijun.top:3000/ediart",
+      url:"http://127.0.0.1:3000/ediart",
       data:JSONart,
       contentType:"application/x-www-form-urlencoded; charset=UTF-8",
       dataType:"text",
@@ -121,6 +121,24 @@ $(function() {
       }
     })
   });
+  //博文修改
+  setTimeout(function () {
+    $(".edit").click(function() {
+      //$(".content").hide();
+      $(".cont-a").removeClass("active");
+      //$(".content").eq(4).show();
+      var title = $(this).parent().children(".art-title").html();
+      var author = $(this).parent().children(".author").html()
+      var tag = $(this).parent().children(".tag").html();
+      var id = $(this).parent().children(".id").html();
+      var txt = $(this).parent().children(".txt").html();
+      console.log(title);
+      console.log(author);
+      console.log(tag);
+      console.log(id);
+      console.log(txt);
+  });
+  },1500);
 
   //新建博文对象
   function getart(title,author,tag,time,txt){

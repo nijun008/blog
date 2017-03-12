@@ -53,10 +53,11 @@
 
     <div class="container content cont-act" id="home"><!-- 首页 -->
       <div class="article-box" ng-repeat="art in arts">
-        <h4><a class="art-title" href="javascript:void(0)">{{art.title}}</a></h4>
-        <p class="info">{{art.author}}&nbsp;&nbsp; &nbsp;{{art.time}}&nbsp; &nbsp;标签:{{art.tag}}&nbsp; &nbsp;文章id:{{art._id}}</p>
+        <h4><a class="art-title" href="javascript:void(0)">11{{art.title}}</a></h4>
+        <p class="info"><span class="author">{{art.author}}</span>&nbsp;&nbsp; &nbsp;{{art.time}}&nbsp; &nbsp;标签:<span class="tag">{{art.tag}}</span>&nbsp; &nbsp;文章id:<span class="id"ng-bind-html="art._id | trustHtml"><span></p>
         <p class="txt" ng-bind-html="art.txt | trustHtml"></p>
         <a class="more" href="javascript:void(0)">展开全文</a>
+        <a class="edit" href="javascript:void(0)">修改</a>
       </div>
     </div>
 

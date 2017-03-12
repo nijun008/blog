@@ -5,14 +5,14 @@ var mainApp = angular.module("mainApp",[]);
 
 mainApp.controller("updata",function ($scope,$http,$sce) {
   $http({
-      url:'http://www.nijun.top:3000/home',
+      url:'http://127.0.0.1:3000/home',
       method:'get',
     }).success(function (data,header,config,status) {
       $scope.arts = data;
     })
   $scope.uphome = function () {
     $http({
-      url:'http://www.nijun.top:3000/home',
+      url:'http://127.0.0.1:3000/home',
       method:'get',
     }).success(function (data,header,config,status) {
       $scope.arts = data;
