@@ -53,8 +53,12 @@
 
     <div class="container content cont-act" id="home"><!-- 首页 -->
       <div class="article-box" ng-repeat="art in arts">
-        <h4><a class="art-title" href="javascript:void(0)">11{{art.title}}</a></h4>
-        <p class="info"><span class="author">{{art.author}}</span>&nbsp;&nbsp; &nbsp;{{art.time}}&nbsp; &nbsp;标签:<span class="tag">{{art.tag}}</span>&nbsp; &nbsp;文章id:<span class="id"ng-bind-html="art._id | trustHtml"><span></p>
+        <h4><a class="art-title" href="javascript:void(0)">{{art.title}}</a></h4>
+        <p class="info">
+          <span class="author">{{art.author}}</span>&nbsp;&nbsp; &nbsp;
+          <span class="time">{{art.time}}</span>&nbsp; &nbsp;
+          标签:<span class="tag">{{art.tag}}</span>&nbsp; &nbsp;
+          文章id:<span class="id">{{art._id}}</span></p>
         <p class="txt" ng-bind-html="art.txt | trustHtml"></p>
         <a class="more" href="javascript:void(0)">展开全文</a>
         <a class="edit" href="javascript:void(0)">修改</a>
@@ -64,26 +68,41 @@
     <div class="container content" id="html/css"><!-- HTML/CSS -->
       <div class="article-box" ng-repeat="htmlart in htmlarts">
         <h4><a class="art-title" href="javascript:void(0)">{{htmlart.title}}</a></h4>
-        <p class="info">{{htmlart.author}}&nbsp; &nbsp;&nbsp;{{htmlart.time}}&nbsp;&nbsp; 标签:{{htmlart.tag}}&nbsp;&nbsp;文章id:{{htmlart._id}}</p>
+        <p class="info">
+          <span class="author">{{htmlart.author}}</span>&nbsp;&nbsp; &nbsp;
+          <span class="time">{{htmlart.time}}</span>&nbsp; &nbsp;
+            标签:<span class="tag">{{htmlart.tag}}</span>&nbsp; &nbsp;
+            文章id:<span class="id">{{htmlart._id}}</span></p>
         <p class="txt" ng-bind-html="htmlart.txt | trustHtml"></p>
         <a class="more" href="javascript:void(0)">展开全文</a>
+        <a class="edit" href="javascript:void(0)">修改</a>
       </div>
     </div>
     <div class="container content" id="javascript"><!-- JS -->
       <div class="article-box" ng-repeat="jsart in jsarts">
         <h4><a class="art-title" href="javascript:void(0)">{{jsart.title}}</a></h4>
-        <p class="info">{{jsart.author}}&nbsp; &nbsp;&nbsp;{{jsart.time}} &nbsp;&nbsp;标签:{{jsart.tag}}&nbsp;&nbsp;文章id:{{jsart._id}}</p>
+        <p class="info">
+          <span class="author">{{jsart.author}}</span>&nbsp;&nbsp; &nbsp;
+          <span class="time">{{jsart.time}}</span>&nbsp; &nbsp;
+          标签:<span class="tag">{{jsart.tag}}</span>&nbsp; &nbsp;
+          文章id:<span class="id">{{jsart._id}}</span></p>
         <p class="txt" ng-bind-html="jsart.txt | trustHtml"></p>
         <a class="more" href="javascript:void(0)">展开全文</a>
+        <a class="edit" href="javascript:void(0)">修改</a>
       </div>
     </div>
 
     <div class="container content" id="other"><!-- 其他 -->
       <div class="article-box" ng-repeat="otherart in otherarts">
         <h4><a class="art-title" href="javascript:void(0)">{{otherart.title}}</a></h4>
-        <p class="info">{{otherart.author}}&nbsp;&nbsp; &nbsp;{{otherart.time}}&nbsp;&nbsp; 标签:{{otherart.tag}}&nbsp;&nbsp;文章id:{{otherart._id}}</p>
+        <p class="info">
+          <span class="author">{{otherart.author}}</span>&nbsp;&nbsp; &nbsp;
+          <span class="time">{{otherart.time}}</span>&nbsp; &nbsp;
+          标签:<span class="tag">{{otherart.tag}}</span>&nbsp; &nbsp;
+          文章id:<span class="id">{{otherart._id}}</span></p>
         <p class="txt" ng-bind-html="otherart.txt | trustHtml"></p>
         <a class="more" href="javascript:void(0)">展开全文</a>
+        <a class="edit" href="javascript:void(0)">修改</a>
       </div>
     </div>
 
@@ -106,6 +125,8 @@
         </select>
         <p></p>
       </form>
+      <span id="edi-art-id"></span>
+      <span id="edi-art-time"></span>
       <textarea name="edi_art_txt" id="edi_art_txt"></textarea>
       <script type="text/javascript">
         CKEDITOR.replace('edi_art_txt');

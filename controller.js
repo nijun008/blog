@@ -20,7 +20,7 @@ mainApp.controller("updata",function ($scope,$http,$sce) {
   }
   $scope.uphtml = function () {
     $http({
-      url:'http://www.nijun.top:3000/html/css',
+      url:'http://127.0.0.1:3000/html/css',
       method:'get',
     }).success(function (data,header,config,status) {
       $scope.htmlarts = data;
@@ -28,7 +28,7 @@ mainApp.controller("updata",function ($scope,$http,$sce) {
   }
   $scope.upjs = function () {
     $http({
-      url:'http://www.nijun.top:3000/javascript',
+      url:'http://127.0.0.1:3000/javascript',
       method:'get',
     }).success(function (data,header,config,status) {
       $scope.jsarts = data;
@@ -36,7 +36,7 @@ mainApp.controller("updata",function ($scope,$http,$sce) {
   }
   $scope.upother = function () {
     $http({
-      url:'http://www.nijun.top:3000/other',
+      url:'http://127.0.0.1:3000/other',
       method:'get',
     }).success(function (data,header,config,status) {
       $scope.otherarts = data;

@@ -19,6 +19,12 @@ $(function() {
       $(".content").eq(3).show();
     } else if(this == cont_a[4]) {
       $(".content").eq(4).show();
+      $("#edi-art-title").val("");
+      $("#edi-art-author").val("");
+      $("#edi-art-tag").val("");
+      CKEDITOR.instances.edi_art_txt.setData("");
+      $("#edi-art-id").html("");
+      $("#edi-art-time").html("");
     } else {
       $(".content").eq(5).show();
     }
@@ -33,7 +39,33 @@ $(function() {
           $(this).html("展开全文");
         }
       });
+    $(".edit").click(function() {
+      $(".content").hide();
+      $(".cont-a").removeClass("active");
+      $(".content").eq(4).show();
+      var title = $(this).parent().find(".art-title").html();
+      var author = $(this).parent().find(".author").html()
+      var time = $(this).parent().find(".time").html();
+      var tag = $(this).parent().find(".tag").html();
+      var id = $(this).parent().find(".id").html();
+      var txt = $(this).parent().find(".txt").html();
+      console.log(title);
+      console.log(author);
+      console.log(time);
+      console.log(tag);
+      console.log(id);
+      console.log(txt);
+      $("#edi-art-title").val(title);
+      $("#edi-art-author").val(author);
+      $("#edi-art-time").html(time)
+      $("#edi-art-tag").val(tag);
+      $("#edi-art-id").html(id);
+      CKEDITOR.instances.edi_art_txt.setData(txt);
+  });
+
     },1500);
+
+    
   });
 
   //展开/收起全文
@@ -65,7 +97,7 @@ $(function() {
     }
     $.ajax({
       type:"POST",
-      url:"http://127.0.0.1/login",
+      url:"http://127.0.0.1:3000/login",
       data:user,
       contentType:"application/x-www-form-urlencoded; charset=UTF-8",
       dataType:"text",
@@ -99,10 +131,12 @@ $(function() {
     var art_title = $("#edi-art-title").val();
     var art_author = $("#edi-art-author").val();
     var art_tag = $("#edi-art-tag").val();
-    var art_time = artgettime(new Date()); 
+    var art_id = $("#edi-art-id").html();
+    var art_time = $("#edi-art-time").html()?$("#edi-art-time").html():artgettime(new Date()); 
     var art_txt = CKEDITOR.instances.edi_art_txt.getData();
-    var art = getart(art_title,art_author,art_tag,art_time,art_txt);
+    var art = getart(art_title,art_author,art_tag,art_time,art_txt,art_id);
     var JSONart = JSON.stringify(art);
+    console.log(JSONart);
     $.ajax({
       type:"POST",
       url:"http://127.0.0.1:3000/ediart",
@@ -124,29 +158,38 @@ $(function() {
   //博文修改
   setTimeout(function () {
     $(".edit").click(function() {
-      //$(".content").hide();
+      $(".content").hide();
       $(".cont-a").removeClass("active");
-      //$(".content").eq(4).show();
-      var title = $(this).parent().children(".art-title").html();
-      var author = $(this).parent().children(".author").html()
-      var tag = $(this).parent().children(".tag").html();
-      var id = $(this).parent().children(".id").html();
-      var txt = $(this).parent().children(".txt").html();
+      $(".content").eq(4).show();
+      var title = $(this).parent().find(".art-title").html();
+      var author = $(this).parent().find(".author").html()
+      var time = $(this).parent().find(".time").html();
+      var tag = $(this).parent().find(".tag").html();
+      var id = $(this).parent().find(".id").html();
+      var txt = $(this).parent().find(".txt").html();
       console.log(title);
       console.log(author);
+      console.log(time);
       console.log(tag);
       console.log(id);
       console.log(txt);
+      $("#edi-art-title").val(title);
+      $("#edi-art-author").val(author);
+      $("#edi-art-time").html(time)
+      $("#edi-art-tag").val(tag);
+      $("#edi-art-id").html(id);
+      CKEDITOR.instances.edi_art_txt.setData(txt);
   });
   },1500);
 
   //新建博文对象
-  function getart(title,author,tag,time,txt){
+  function getart(title,author,tag,time,txt,id){
     var newart = {
       "title":title,
       "author":author,
       "tag":tag,
       "time":time,
+      "_id":id,
       "txt":txt,
       "username":window.localStorage.username,
       "password":window.localStorage.password

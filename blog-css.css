@@ -91,7 +91,11 @@ blockquote{
 #newart,#exit-btn{
   display: none;
 }
+#edi-art-id,#edi-art-time{
+  display: none;
+}
 
+/*时钟*/
 #clock{
   float: right;
   background-color: #f6f6f6;

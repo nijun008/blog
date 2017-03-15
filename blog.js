@@ -75,7 +75,7 @@ http.createServer(function (req,res) {
       })
   } else if(pathname == '/login') {  //响应登录
     var data = "";
-    req.on("data",function(chunk){  
+    req.on("data",function(chunk){
       data += chunk;
     });
     req.on("end",function(){
