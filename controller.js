@@ -5,22 +5,24 @@ var mainApp = angular.module("mainApp",[]);
 
 mainApp.controller("updata",function ($scope,$http,$sce) {
   $http({
-      url:'http://127.0.0.1:3000/home',
+      url:'http://www.nijun.top:3000/home',
       method:'get',
     }).success(function (data,header,config,status) {
       $scope.arts = data;
     })
   $scope.uphome = function () {
-    $http({
-      url:'http://127.0.0.1:3000/home',
-      method:'get',
-    }).success(function (data,header,config,status) {
-      $scope.arts = data;
-    });
+    setTimeout(function(){
+      $http({
+        url:'http://www.nijun.top:3000/home',
+        method:'get',
+      }).success(function (data,header,config,status) {
+        $scope.arts = data;
+      });
+    },300);
   }
   $scope.uphtml = function () {
     $http({
-      url:'http://127.0.0.1:3000/html/css',
+      url:'http://www.nijun.top:3000/html/css',
       method:'get',
     }).success(function (data,header,config,status) {
       $scope.htmlarts = data;
@@ -28,7 +30,7 @@ mainApp.controller("updata",function ($scope,$http,$sce) {
   }
   $scope.upjs = function () {
     $http({
-      url:'http://127.0.0.1:3000/javascript',
+      url:'http://www.nijun.top:3000/javascript',
       method:'get',
     }).success(function (data,header,config,status) {
       $scope.jsarts = data;
@@ -36,7 +38,7 @@ mainApp.controller("updata",function ($scope,$http,$sce) {
   }
   $scope.upother = function () {
     $http({
-      url:'http://127.0.0.1:3000/other',
+      url:'http://www.nijun.top:3000/other',
       method:'get',
     }).success(function (data,header,config,status) {
       $scope.otherarts = data;

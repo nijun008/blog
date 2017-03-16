@@ -9,8 +9,9 @@ var url = require('url');
 var querystring = require('querystring');
 var MongoClient = require('mongodb').MongoClient;
 var blogdb = 'mongodb://localhost:27017/blog';
+var ObjectId = require('mongodb').ObjectId;
 
-var sortid = 4; //文章排序id
+var sortid = 5; //文章排序id
 var user = {    //账户
   username:"nijun",
   password:"jiuhao123"
@@ -49,6 +50,20 @@ var selectData = function(db,tag,callback) {
       });
     }
 }
+//更新数据
+var updataData = function(db,data,callback) {
+  var collection = db.collection('art');
+  var whereStr = {"_id":ObjectId(data._id)};
+  var updateStr = {$set:{"title":data.title,"txt":data.txt,"tag":data.tag,"author":data.author}};
+  collection.update(whereStr,updateStr,function(err,result){
+    if(err){
+      console.log(err);
+      return;
+    }
+    callback(result);
+  });
+}
+
 
 http.createServer(function (req,res) {
   var pathname = url.parse(req.url).pathname;
@@ -105,17 +120,31 @@ http.createServer(function (req,res) {
     req.on("end",function(){
         data = JSON.parse(data);
         if(data.username == user.username && data.password == user.password){
-          data.sortid = sortid;
-          sortid++;
-          MongoClient.connect(blogdb,function (err,db) {
-            inserData(db,data,function (result) {
-              db.close();
-              res.setHeader('Access-Control-Allow-Origin', '*');
-              res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
-              res.write("OK");
-              res.end();
+          delete data.username;
+          delete data.password;
+          if(data._id){ //博文修改
+            MongoClient.connect(blogdb,function (err,db){
+              updataData(db,data,function (result){
+                db.close();
+              })
             })
-          })
+          } else {  //新增博文
+            data.sortid = sortid;
+            sortid++;
+            MongoClient.connect(blogdb,function (err,db) {
+              inserData(db,data,function (result) {
+                db.close();
+                // res.setHeader('Access-Control-Allow-Origin', '*');
+                // res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
+                // res.write("OK");
+                // res.end();
+              })
+            })
+          }
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});
+          res.write("OK");
+          res.end();
         }else{
           res.setHeader('Access-Control-Allow-Origin', '*');
           res.writeHead(200,{"Content-Type":"text/plain;charset=UTF-8"});

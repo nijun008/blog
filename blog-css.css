@@ -88,7 +88,7 @@ blockquote{
   text-align: center;
 }
 /*新建博文按钮,退出按钮*/
-#newart,#exit-btn{
+#newart,#exit-btn,.edit{
   display: none;
 }
 #edi-art-id,#edi-art-time{

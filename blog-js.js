@@ -39,31 +39,29 @@ $(function() {
           $(this).html("展开全文");
         }
       });
-    $(".edit").click(function() {
-      $(".content").hide();
-      $(".cont-a").removeClass("active");
-      $(".content").eq(4).show();
-      var title = $(this).parent().find(".art-title").html();
-      var author = $(this).parent().find(".author").html()
-      var time = $(this).parent().find(".time").html();
-      var tag = $(this).parent().find(".tag").html();
-      var id = $(this).parent().find(".id").html();
-      var txt = $(this).parent().find(".txt").html();
-      console.log(title);
-      console.log(author);
-      console.log(time);
-      console.log(tag);
-      console.log(id);
-      console.log(txt);
-      $("#edi-art-title").val(title);
-      $("#edi-art-author").val(author);
-      $("#edi-art-time").html(time)
-      $("#edi-art-tag").val(tag);
-      $("#edi-art-id").html(id);
-      CKEDITOR.instances.edi_art_txt.setData(txt);
-  });
 
-    },1500);
+      if(window.localStorage.username == "nijun"){
+        $(".edit").show();
+      }
+      $(".edit").click(function() {
+        $(".content").hide();
+        $(".cont-a").removeClass("active");
+        $(".content").eq(4).show();
+        var title = $(this).parent().find(".art-title").html();
+        var author = $(this).parent().find(".author").html()
+        var time = $(this).parent().find(".time").html();
+        var tag = $(this).parent().find(".tag").html();
+        var id = $(this).parent().find(".id").html();
+        var txt = $(this).parent().find(".txt").html();
+        $("#edi-art-title").val(title);
+        $("#edi-art-author").val(author);
+        $("#edi-art-time").html(time)
+        $("#edi-art-tag").val(tag);
+        $("#edi-art-id").html(id);
+        CKEDITOR.instances.edi_art_txt.setData(txt);
+      });
+
+    },1000);
 
     
   });
@@ -97,7 +95,7 @@ $(function() {
     }
     $.ajax({
       type:"POST",
-      url:"http://127.0.0.1:3000/login",
+      url:"http://www.nijun.top:3000/login",
       data:user,
       contentType:"application/x-www-form-urlencoded; charset=UTF-8",
       dataType:"text",
@@ -106,6 +104,7 @@ $(function() {
           $('#login').modal('hide');
           $("#login-btn").hide();
           $("#callme-btn").hide();
+          $(".edit").show();
           $("#newart").css({"display":"block"}).show();
           $("#exit-btn").css({"display":"block"}).show();
           var local = window.localStorage;
@@ -134,12 +133,13 @@ $(function() {
     var art_id = $("#edi-art-id").html();
     var art_time = $("#edi-art-time").html()?$("#edi-art-time").html():artgettime(new Date()); 
     var art_txt = CKEDITOR.instances.edi_art_txt.getData();
-    var art = getart(art_title,art_author,art_tag,art_time,art_txt,art_id);
+    var art = getart(art_title,art_author,art_tag,art_time,art_txt);
+    if (art_id != "") art._id = art_id;
     var JSONart = JSON.stringify(art);
     console.log(JSONart);
     $.ajax({
       type:"POST",
-      url:"http://127.0.0.1:3000/ediart",
+      url:"http://www.nijun.top:3000/ediart",
       data:JSONart,
       contentType:"application/x-www-form-urlencoded; charset=UTF-8",
       dataType:"text",
@@ -154,6 +154,39 @@ $(function() {
         }
       }
     })
+    setTimeout(function () {
+      $(".more").click(function() {
+        if($(this).html() == "展开全文") {
+          $(this).prev().css("height","auto");
+          $(this).html("收起全文");
+        } else {
+          $(this).prev().animate({"height":"3.5em"}, 500);
+          $(this).html("展开全文");
+        }
+      });
+
+      if(window.localStorage.username == "nijun"){
+        $(".edit").show();
+      }
+      $(".edit").click(function() {
+        $(".content").hide();
+        $(".cont-a").removeClass("active");
+        $(".content").eq(4).show();
+        var title = $(this).parent().find(".art-title").html();
+        var author = $(this).parent().find(".author").html()
+        var time = $(this).parent().find(".time").html();
+        var tag = $(this).parent().find(".tag").html();
+        var id = $(this).parent().find(".id").html();
+        var txt = $(this).parent().find(".txt").html();
+        $("#edi-art-title").val(title);
+        $("#edi-art-author").val(author);
+        $("#edi-art-time").html(time)
+        $("#edi-art-tag").val(tag);
+        $("#edi-art-id").html(id);
+        CKEDITOR.instances.edi_art_txt.setData(txt);
+      });
+
+    },1000);
   });
   //博文修改
   setTimeout(function () {
@@ -167,12 +200,6 @@ $(function() {
       var tag = $(this).parent().find(".tag").html();
       var id = $(this).parent().find(".id").html();
       var txt = $(this).parent().find(".txt").html();
-      console.log(title);
-      console.log(author);
-      console.log(time);
-      console.log(tag);
-      console.log(id);
-      console.log(txt);
       $("#edi-art-title").val(title);
       $("#edi-art-author").val(author);
       $("#edi-art-time").html(time)
@@ -180,7 +207,7 @@ $(function() {
       $("#edi-art-id").html(id);
       CKEDITOR.instances.edi_art_txt.setData(txt);
   });
-  },1500);
+  },1000);
 
   //新建博文对象
   function getart(title,author,tag,time,txt,id){
@@ -189,7 +216,6 @@ $(function() {
       "author":author,
       "tag":tag,
       "time":time,
-      "_id":id,
       "txt":txt,
       "username":window.localStorage.username,
       "password":window.localStorage.password
@@ -218,7 +244,7 @@ $(function() {
       $(this).html("展开全文");
     }
   });
-  },1500);
+  },1000);
 
   //绘制时钟
   var canvas = document.getElementById("clock");
