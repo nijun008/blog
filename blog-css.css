@@ -41,8 +41,10 @@ outline: none;
 }
 .info{
   color: gray;
-  margin-bottom: 30px;
-  margin-top: 25px;
+  font-size: 12px;
+}
+.author,.id,.time,.tag{
+  margin-right: 10px;
 }
 .txt{
   height: 3.5em;
@@ -112,5 +114,12 @@ blockquote{
     /*display: none;*/
     float: none;
     margin: auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  img{
+     width: 100% !important;
+     height: auto !important;
   }
 }

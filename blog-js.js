@@ -122,6 +122,7 @@ $(function() {
     $("#exit-btn").hide();
     $("#login-btn").show();
     $("#callme-btn").show();
+    $(".edit").hide();
     window.localStorage.clear();
   });
 
