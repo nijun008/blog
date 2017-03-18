@@ -110,7 +110,7 @@ blockquote{
 }
 #linkbox{
   float: right;
-  margin-top: 190px;
+  margin-top: 180px;
   margin-right: -150px;
   text-align: center;
   width: 150px;
@@ -141,6 +141,7 @@ blockquote{
     /*display: none;*/
     float: none;
     margin: auto;
+    margin-bottom: 15px;
   }
   #linkbox{
     display: none;
