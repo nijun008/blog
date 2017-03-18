@@ -104,7 +104,30 @@ blockquote{
   margin-right: 20px;
   display: block;
 }
-
+#linkbox{
+  float: right;
+  margin-top: 190px;
+  margin-right: -150px;
+  text-align: center;
+  width: 150px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 25px 10px 5px 10px;
+  background-color: #eee;
+}
+#linkbox h5{
+  color: #888;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+#linkbox li{
+  list-style: none;
+  margin-bottom: 5px;
+}
+#linkbox ul{
+  padding-left: 0;
+}
 /*媒体查询*/
 @media screen and (max-width: 768px) {
   .content{
@@ -115,9 +138,12 @@ blockquote{
     float: none;
     margin: auto;
   }
+  #linkbox{
+    display: none;
+  }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 520px) {
   img{
      width: 100% !important;
      height: auto !important;
