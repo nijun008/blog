@@ -1,6 +1,7 @@
 var express = require('express')
 var Tag = require('../models/Tag')
 var Content = require('../models/Content')
+var Comment = require('../models/Comment')
 
 var router  = express.Router()
 
@@ -55,6 +56,9 @@ router.get('/view', function (req, res) {
     content.views ++ //文章阅读数累加
     content.save()
 
+    return Comment.where({ content: id }).find().sort({ createTime: -1 }).populate('user')
+  }).then(comments => {
+    data.content.comments = comments
     res.render('main/view', data)
   })
 })

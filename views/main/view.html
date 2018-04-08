@@ -16,8 +16,8 @@
 <div>
   <p>评论列表</p>
   {% for comment in content.comments %}
-  <h4 style="margin-top: 16px;">{{ comment.username }} 说：<span style="float: right;">{{ comment.createTime | date('Y-m-d h:m') }}</span></h4>
-  <p>{{ comment.content }}</p>
+  <h4 style="margin-top: 16px;">{{ comment.user.username }} 说：<span style="float: right;">{{ comment.createTime | date('Y-m-d h:m') }}</span></h4>
+  <p>{{ comment.txt }}</p>
   {% endfor %}
 </div>
 
@@ -32,7 +32,7 @@
         type: 'post',
         data: {
           contentId: $('#contentId').val(),
-          content: $('#content').val()
+          txt: $('#content').val()
         },
         success: function (data) {
           window.location.reload()
