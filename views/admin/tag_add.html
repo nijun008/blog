@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<ol class="breadcrumb">
+  <li><a href="/admin">管理首页</a></li>
+  <li><a href="/admin/user"><span>添加标签</span></a></li>
+</ol>
+
+<h3>添加标签</h3> 
+
+<form method="POST" action="/admin/tag/add">
+  <div class="form-group">
+    <label for="name">标签名称</label>
+    <input type="text" class="form-control" id="name" placeholder="请输入标签名称" name="name">
+  </div>
+  <button type="submit" class="btn btn-default">添加</button>
+</form>
+
+{% endblock %}

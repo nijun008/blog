@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+{% block content%}
+<h2>{{ content.title }}</h2>
+<p>分类：{{ content.tag.name }} 作者：{{ content.user.username }} 日期：{{ content.createTime | date('Y-m-d h:m') }} 点击量：{{ content.views }}</p>
+<p>{{ content.content }}</p>
+{% if userInfo._id %}
+<h3>评论<span style="float: right;">{{ content.comments.length }}条评论</span></h3>
+<form id="comment-form">
+  <input type="text" id="content">
+  <input type="hidden" id="contentId" value="{{ content.id }}">
+  <input id="comment-btn" type="submit" value="提交">
+</form>
+{% else %}
+<p>您还未登录,无法评论</p>
+{% endif %}
+<div>
+  <p>评论列表</p>
+  {% for comment in content.comments %}
+  <h4 style="margin-top: 16px;">{{ comment.username }} 说：<span style="float: right;">{{ comment.createTime | date('Y-m-d h:m') }}</span></h4>
+  <p>{{ comment.content }}</p>
+  {% endfor %}
+</div>
+
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+  $(function () {
+    $('#comment-btn').on('click', function (e) {
+      e.preventDefault()
+      $.ajax({
+        url: '/api/comment/post',
+        type: 'post',
+        data: {
+          contentId: $('#contentId').val(),
+          content: $('#content').val()
+        },
+        success: function (data) {
+          window.location.reload()
+        }
+      })
+    })
+  })
+</script>
+{% endblock %}

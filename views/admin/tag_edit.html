@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<ol class="breadcrumb">
+  <li><a href="/admin">管理首页</a></li>
+  <li><a href="/admin/user"><span>标签编辑</span></a></li>
+</ol>
+
+<h4>标签编辑 - {{ tag.name }}</h4> 
+
+<form method="POST" action="/admin/tag/edit?id={{ tag._id.toString() }}">
+  <div class="form-group">
+    <label for="name">标签名称</label>
+    <input value="{{ tag.name }}" type="text" class="form-control" id="name" placeholder="请输入标签名称" name="name">
+  </div>
+  <button type="submit" class="btn btn-default">保存</button>
+</form>
+
+{% endblock %}

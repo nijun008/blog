@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>首页</title>
+  <link rel="stylesheet" type="text/css" href="/public/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="/public/css/common.css">
+  {% block style %}
+  {% endblock %}
+</head>
+<body>
+  <ul style="margin: 20px 0;">
+    {% if tag %}
+    <li><a href="/">主页</a></li>
+    {% else %}
+    <li><a href="/" class="active">主页</a></li>
+    {% endif %}
+    {% for item in tags %}
+    {% if tag.toString() == item._id.toString() %}
+    <li><a href="/?tag={{ item._id.toString() }}" class="active">{{ item.name }}</a></li>
+    {% else %}
+    <li><a href="/?tag={{ item._id.toString() }}">{{ item.name }}</a></li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+
+  {% block content %}
+  {% endblock %}
+  
+  {% if pages > 1 %}
+  <div style="margin-top: 20px;">
+    {% if page<=1 %}
+    <a href="javascript:;">没有上一页了</a>
+    {% else %}
+    <a href="/?tag={{ tag }}&page={{page - 1}}">上一页</a>
+    {% endif %}
+    <br>{{ page }}/{{ pages }}<br>
+    {% if page >= pages%}
+    <a href="javascript:;">没有下一页了</a>
+    {% else %}
+    <a href="/?tag={{ tag }}&page={{page + 1}}">下一页</a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <script type="text/javascript" src="/public/js/jquery.min.js"></script>
+  {% block script %}
+  {% endblock %}
+</body>
+</html>

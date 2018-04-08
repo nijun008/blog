@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+<ol class="breadcrumb">
+  <li><a href="/admin">管理首页</a></li>
+  <li><a href="/admin/content_edit"><span>文章编辑</span></a></li>
+</ol>
+
+<h4>文章编辑 - {{ content.title }}</h4> 
+
+<form method="POST" action="/admin/content/edit?id={{ content._id.toString() }}">
+  <div class="form-group">
+    <label for="tag">文章分类</label>
+    <select name="tag" id="tag" class="form-control">
+
+      {% for tag in tags %}
+      {% if tag._id.toString() == content.tag._id.toString() %}
+      <option value="{{ tag._id.toString() }}" selected="selected">{{ tag.name }}</option>
+      {% else %}
+      <option value="{{ tag._id.toString() }}">{{ tag.name }}</option>
+      {% endif %}
+      {% endfor %}
+
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="title">文章标题</label>
+    <input type="text" class="form-control" id="name" placeholder="请输入文章标题" name="title" value="{{ content.title }}">
+  </div>
+  <div class="form-group">
+    <label for="description">文章简介</label>
+    <textarea class="form-control" id="description" name="description" rows="4" value="{{ content.description }}">{{ content.description }}</textarea>
+  </div>
+  <div class="form-group">
+    <label for="content">文章内容</label>
+    <textarea id="content" name="content" class="form-control" rows="20" value="{{ content.content }}">{{ content.content }}</textarea>
+  </div>
+  <button type="submit" class="btn btn-default">保存</button>
+</form>
+
+{% endblock %}

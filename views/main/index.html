@@ -1,0 +1,136 @@
+{% extends 'layout.html' %}
+
+{% block style %}
+  <style type="text/css">
+    .active{
+      color: red;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<h1>主页</h1>
+  {% if userInfo._id %}
+  <h5>你好，{{userInfo.username}}</h5>
+  <a href="javascript:;" class="logout">退出</a>
+  {% else %}
+  <div class="register">
+    <form>
+      <input type="text" name="username">
+      <br>
+      <input type="password" name="password">
+      <br>
+      <input type="password" name="repassword">
+      <br>
+      <a href="javascript:;">注册</a>
+    </form>
+  </div>
+
+  <div class="login" style="margin-top: 20px;">
+    <form>
+      <input type="text" name="username">
+      <br>
+      <input type="password" name="password">
+      <br>
+      <br>
+      <a href="javascript:;">登录</a>
+    </form>
+  </div>
+  {% endif %}
+  <ul style="margin: 20px 0;">
+    {% if tag %}
+    <li><a href="/">主页</a></li>
+    {% else %}
+    <li><a href="/" class="active">主页</a></li>
+    {% endif %}
+    {% for item in tags %}
+    {% if tag.toString() == item._id.toString() %}
+    <li><a href="/?tag={{ item._id.toString() }}" class="active">{{ item.name }}</a></li>
+    {% else %}
+    <li><a href="/?tag={{ item._id.toString() }}">{{ item.name }}</a></li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+
+  <div style="margin: 20px 0">
+    {% for content in contents %}
+    <div style="margin-bottom: 16px;">
+      <h3>{{ content.title }} <span>{{ content.createTime | date('Y-m-d H:i', -8*60) }}</span></h3>
+      <p>{{ content.tag.name }} {{ content.user.username }}</p>
+      <p>{{ content.views }}</p>
+      <p>{{ content.description }}</p>
+      <p><a href="/view?contentid={{ content.id }}">阅读全文</a></p>
+    </div>
+    {% endfor %}
+  </div>
+  
+  {% if pages > 1 %}
+  <div style="margin-top: 20px;">
+    {% if page<=1 %}
+    <a href="javascript:;">没有上一页了</a>
+    {% else %}
+    <a href="/?tag={{ tag }}&page={{page - 1}}">上一页</a>
+    {% endif %}
+    <br>{{ page }}/{{ pages }}<br>
+    {% if page >= pages%}
+    <a href="javascript:;">没有下一页了</a>
+    {% else %}
+    <a href="/?tag={{ tag }}&page={{page + 1}}">下一页</a>
+    {% endif %}
+  </div>
+  {% endif %}
+{% endblock %}
+
+{% block script %}
+ <script type="text/javascript">
+    $(function () {
+      $('.register').find('a').on('click', function (e) {
+        e.preventDefault()
+        $.ajax({
+          url: '/api/user/register',
+          type: 'post',
+          data: {
+            username: $('.register').find('[name="username"]').val(),
+            password: $('.register').find('[name="password"]').val(),
+            repassword: $('.register').find('[name="repassword"]').val()
+          },
+          dataType: 'json',
+          success: function (data) {
+            alert(data.message)
+          }
+        })
+      })
+
+      $('.login').find('a').on('click', function (e) {
+        e.preventDefault()
+        $.ajax({
+          url: '/api/user/login',
+          type: 'post',
+          data: {
+            username: $('.login').find('[name="username"]').val(),
+            password: $('.login').find('[name="password"]').val(),
+          },
+          dataType: 'json',
+          success: function (data) {
+            window.location.reload()
+          }
+        })
+      })
+
+      $('.logout').on('click', function () {
+        console.log(this)
+        $.ajax({
+          type: 'get',
+          url: '/api/user/logout',
+          success: function (data) {
+            console.log(data)
+            window.location.reload()
+          }
+        })
+      })
+
+    })
+  </script>
+{% endblock %}
+</body>
+</html>
