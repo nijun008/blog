@@ -16,7 +16,7 @@
 <div>
   <p>评论列表</p>
   {% for comment in content.comments %}
-  <h4 style="margin-top: 16px;">{{ comment.user.username }} 说：<span style="float: right;">{{ comment.createTime | date('Y-m-d h:m') }}</span></h4>
+  <h4 style="margin-top: 16px;">{{ comment.user.username }} 说：<span style="float: right;">{{ comment.createTime | date('Y-m-d h:i', -8*60) }}</span></h4>
   <p>{{ comment.txt }}</p>
   {% endfor %}
 </div>

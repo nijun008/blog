@@ -116,7 +116,8 @@ router.post('/comment/post', function (req, res) {
   new Comment({
     content: req.body.contentId,
     user: req.userInfo._id.toString(),
-    txt: req.body.txt
+    txt: req.body.txt,
+    createTime: new Date()
   }).save().then((newContent) => {
     responseData.code = 200
     responseData.message = '评论提交成功'

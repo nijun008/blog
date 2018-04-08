@@ -35,10 +35,4 @@ module.exports = new mongoose.Schema({
     default: ''
   },
 
-  //评论
-  comments: {
-    type: Array,
-    default: []
-  }
-
 })

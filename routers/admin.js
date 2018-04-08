@@ -276,7 +276,8 @@ router.post('/content/add', function (req, res) {
     title: req.body.title,
     user: req.userInfo._id.toString(),
     description: req.body.description,
-    content: req.body.content
+    content: req.body.content,
+    createTime: new Date()
   }).save().then(() => {
     res.render('admin/success', {
       userInfo: req.userInfo,
