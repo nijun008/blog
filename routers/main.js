@@ -19,7 +19,6 @@ router.use(function (req, res, next) {
   })
 })
 
-
 router.get('/', function (req, res, next) {
 
   data.contents = []
@@ -58,7 +57,6 @@ router.get('/view', function (req, res) {
 
     return Comment.where({ content: id }).find().sort({ createTime: -1 }).populate('user')
   }).then(comments => {
-    console.log(comments)
     data.content.comments = comments
     res.render('main/view', data)
   })

@@ -1,8 +1,10 @@
 var express = require('express')
-var router  = express.Router()
 var User = require('../models/User')
+var Tag = require('../models/Tag')
 var Content = require('../models/Content')
 var Comment = require('../models/Comment')
+
+var router  = express.Router()
 
 //统一返回数据
 var responseData
@@ -14,8 +16,65 @@ router.use(function (req, res, next) {
   next()
 })
 
-router.get('/', function (req, res, next) {
-  res.send('api')
+//获取所有标签
+router.get('/tags',function (req, res, next) {
+  responseData = {
+    userInfo: req.userInfo,
+  }
+  Tag.find().then(tags => {
+    responseData.code = 200
+    responseData.message = 'SUCCESS'
+    responseData.tags = tags
+    res.json(responseData)
+    return
+  })
+})
+
+//获取文章列表
+router.get('/contents', function (req, res, next) {
+
+  responseData.contents = []
+  responseData.count = 0
+  responseData.page = Number(req.query.page) || 1
+  responseData.limit = 10
+  responseData.pages = 0
+  responseData.tag = req.query.tag || null
+
+  var where = {}
+  if (responseData.tag) {
+    where.tag = responseData.tag
+  }
+  Content.where(where).count().then(count => {
+    responseData.count = count
+    responseData.pages = Math.ceil(responseData.count / responseData.limit)
+    responseData.page = Math.min(responseData.page, responseData.pages)
+    responseData.page = Math.max(responseData.page, 1)
+    var skip = (responseData.page - 1) * responseData.limit
+    return Content.where(where).find().sort({ createTime: -1}).limit(responseData.limit).skip(skip).populate(['tag', 'user'])
+  }).then((contents) => {
+    responseData.contents = contents
+    res.json(responseData)
+    return
+  })
+})
+
+//获取文章详情
+router.get('/content', function (req, res) {
+  var id = req.query.id || ''
+  Content.findOne({
+    _id: id
+  }).populate(['tag', 'user']).then(content => {
+    responseData.content = content
+
+    content.views ++ //文章阅读数累加
+    content.save()
+
+    return Comment.where({ content: id }).find().sort({ createTime: -1 }).populate('user')
+  }).then(comments => {
+    responseData.content.comments = comments
+    res.json(responseData)
+    return
+  })
 })
 
 //用户注册
