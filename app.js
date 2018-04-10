@@ -15,6 +15,7 @@ var app = express()
 
 //静态文件托管 
 app.use('/public', express.static(__dirname + '/public'))
+app.use('/static', express.static(__dirname + '/static'))
 
 //配置模板引擎,第一个参数为模板文件后缀，第二个参数为处理模板的方法
 app.engine('html', swig.renderFile)
@@ -30,6 +31,7 @@ swig.setDefaults({ cache: false })
 
 //设置post数据解析
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 //设置cookies
 app.use(function (req, res, next) {
