@@ -36,7 +36,7 @@ router.get('/contents', function (req, res, next) {
   responseData.contents = []
   responseData.count = 0
   responseData.page = Number(req.query.page) || 1
-  responseData.limit = 10
+  responseData.limit = 5
   responseData.pages = 0
   responseData.tag = req.query.tag || null
 
@@ -81,7 +81,7 @@ router.get('/content', function (req, res) {
 router.post('/user/register', function (req, res, next) {
   var username = req.body.username
   var password = req.body.password
-  var repassword = req.body.repassword
+  var confirmPassword = req.body.confirmPassword
 
   //简单验证
   if(username == '') {
@@ -96,7 +96,7 @@ router.post('/user/register', function (req, res, next) {
     res.json(responseData)
     return
   }
-  if(password !== repassword) {
+  if(password !== confirmPassword) {
     responseData.code = 3
     responseData.message = '两次输入的密码不一致'
     res.json(responseData)
@@ -111,7 +111,7 @@ router.post('/user/register', function (req, res, next) {
       responseData.code = 4
       responseData.message = '用户名已被占用'
       res.json(responseData)
-      return
+      return Promise.reject('用户名已被占用')
     }
     var user = new User({
       username: username,
@@ -122,10 +122,13 @@ router.post('/user/register', function (req, res, next) {
     responseData.code = 200
     responseData.message = '注册成功'
     res.json(responseData)
+  }).catch(err=> {
+    return
   })
 
 })
 
+//用户登录
 router.post('/user/login', function (req, res, next) {
   var username = req.body.username
   var password = req.body.password
