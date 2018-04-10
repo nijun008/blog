@@ -19,7 +19,7 @@ router.use(function (req, res, next) {
   })
 })
 
-router.get('/', function (req, res, next) {
+/*router.get('/', function (req, res, next) {
 
   data.contents = []
   data.count = 0
@@ -43,6 +43,10 @@ router.get('/', function (req, res, next) {
     data.contents = contents
     res.render('main/index', data)
   })
+})*/
+
+router.get('/', function (req, res, next) {
+  res.render('index')
 })
 
 router.get('/view', function (req, res) {
