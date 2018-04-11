@@ -29,9 +29,26 @@
   </div>
   <div class="form-group">
     <label for="content">文章内容</label>
-    <textarea id="content" name="content" class="form-control" rows="20"></textarea>
+    <div id="editor">
+      
+    </div>
+    <textarea id="content" name="content" class="form-control" rows="1" style="visibility: hidden; height:0">
+    </textarea>
   </div>
-  <button type="submit" class="btn btn-default">添加</button>
+  <button type="submit" class="btn btn-default" id="submit">添加</button>
 </form>
 
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="/public/js/wangEditor.min.js"></script>
+<script type="text/javascript">
+  var E = window.wangEditor
+  var editor = new E('#editor')
+  editor.create()
+  $('#submit').on('click', function (e) {
+    $('#content').val(editor.txt.html())
+    return true
+  })
+</script>
 {% endblock %}
