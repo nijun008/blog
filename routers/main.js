@@ -46,7 +46,7 @@ router.use(function (req, res, next) {
 })*/
 
 router.get('/', function (req, res, next) {
-  res.render('index')
+  res.render('./index')
 })
 
 router.get('/view', function (req, res) {

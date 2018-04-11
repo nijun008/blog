@@ -21,7 +21,8 @@ app.use('/static', express.static(__dirname + '/static'))
 app.engine('html', swig.renderFile)
 
 //设置模板引擎,第一个参数必须为views，第二个参数为模板文件路径
-app.set('views', './views')
+//app.set('views', './views')          //原代码
+app.set('views', __dirname + '/views') //新代码
 
 //设置模板引擎,第一个参数必须为view engine,第二个参数为模板文件后缀(app.engine的第一个参数)
 app.set('view engine', 'html')
