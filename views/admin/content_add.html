@@ -47,8 +47,13 @@
   var editor = new E('#editor')
   editor.create()
   $('#submit').on('click', function (e) {
-    $('#content').val(editor.txt.html())
-    return true
+    if (editor.txt.html().indexOf("'") === -1) {
+      $('#content').val(editor.txt.html())
+      return true
+    } else {
+      alert('文章内容中不能存在单引号')
+      return false
+    }
   })
 </script>
 {% endblock %}

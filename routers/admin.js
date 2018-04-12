@@ -264,7 +264,7 @@ router.get('/content/add', function (req, res) {
 router.post('/content/add', function (req, res) {
 
   if(req.body.tag == '' || req.body.title == '') {
-    render('admin/error', {
+    res.render('admin/error', {
       userInfo: req.userInfo,
       message: '文章标签和标题不能为空'
     })
