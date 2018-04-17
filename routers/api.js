@@ -153,7 +153,8 @@ router.post('/user/login', function (req, res, next) {
     responseData.message = '登录成功'
     responseData.userInfo = {
       _id: userInfo._id,
-      username: userInfo.username
+      username: userInfo.username,
+      isAdmin: userInfo.isAdmin
     }
     req.cookies.set('userInfo', JSON.stringify({
       _id: userInfo._id,
