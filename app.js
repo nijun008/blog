@@ -55,6 +55,7 @@ app.use(function (req, res, next) {
 })
 
 //根据功能划分路由模块
+app.use('/upload', require('./routers/upload'))
 app.use('/admin', require('./routers/admin'))
 app.use('/api', require('./routers/api'))
 app.use('/', require('./routers/main'))

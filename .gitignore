@@ -4,3 +4,4 @@ db/
 static/
 npm-debug.log
 
+public/upload/

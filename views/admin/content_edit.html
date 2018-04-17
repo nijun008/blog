@@ -50,6 +50,26 @@
 <script type="text/javascript">
   var E = window.wangEditor
   var editor = new E('#editor')
+  editor.customConfig.customUploadImg = function (files, insert) {
+    // files 是 input 中选中的文件列表
+    imgZip(files[0])
+
+    setTimeout(function () {
+      var formData = new FormData();
+      formData.append('upload', img);
+      $.ajax({
+        url: '/upload',
+        type: 'post',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          // insert 是获取图片 url 后，插入到编辑器的方法
+          insert(data.url)
+        }
+      })
+    }, 200)
+  }
   editor.create()
   editor.txt.html('{% autoescape false %}{{ content.content }}{% endautoescape %}')
   $('#submit').on('click', function (e) {
@@ -61,5 +81,40 @@
       return false
     }
   })
+
+  // 图片处理
+  // file 图片文件对象
+  var img = {}
+  function imgZip (file) {
+    var base64 = ''
+    //图片读取
+    var r = new FileReader()
+    r.readAsDataURL(file)
+    r.onload = function () {
+      //利用canvas图片压缩
+      var cvs = document.createElement('canvas')
+      var ctx = cvs.getContext('2d')
+      var image = new window.Image()
+      image.src = this.result  //this.result是readAsDataURL读取结果
+      image.onload = () => {
+        cvs.width = image.width > 810 ? 810 : image.width
+        cvs.height = image.height / image.width * cvs.width
+        setTimeout(() => {
+          ctx.drawImage(image, 0, 0, cvs.width, cvs.height)
+
+          //转为base64
+          base64 = cvs.toDataURL('image/jpeg', 0.8)
+
+          //转为二进制图片
+          cvs.toBlob(function (blob) {
+            img = blob
+            img.name = file.name
+          },'image/jpeg', 0.8)
+
+        }, 0)
+      }
+
+    }
+  }
 </script>
 {% endblock %}

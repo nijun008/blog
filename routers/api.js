@@ -4,7 +4,7 @@ var Tag = require('../models/Tag')
 var Content = require('../models/Content')
 var Comment = require('../models/Comment')
 
-var router  = express.Router()
+var router = express.Router()
 
 //统一返回数据
 var responseData
