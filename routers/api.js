@@ -71,7 +71,8 @@ router.get('/content', function (req, res) {
 
     return Comment.where({ content: id }).find().sort({ createTime: -1 }).populate('user')
   }).then(comments => {
-    responseData.content.comments = comments
+    responseData.message = 'success'
+    responseData.comments = comments
     res.json(responseData)
     return
   })
@@ -183,7 +184,7 @@ router.post('/comment/post', function (req, res) {
     createTime: new Date()
   }).save().then((newContent) => {
     responseData.code = 200
-    responseData.message = '评论提交成功'
+    responseData.message = 'success'
     res.json(responseData)
     return
   })
