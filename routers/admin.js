@@ -54,6 +54,68 @@ router.get('/user', function (req, res, next) {
   })
 })
 
+router.get('/user/reset', (req, res) => {
+  var id = req.query.id
+  User.findOne({
+    _id: id
+  }).then((user) => {
+    if (!user) {
+      res.render('admin/error', {
+        userInfo: req.userInfo,
+        message: '用户不存在'
+      })
+    } else {
+      return User.update({
+        _id: id
+      }, {
+        password: '000000'
+      })
+    }
+  }).then((user) => {
+    res.render('admin/success',{
+      userInfo: req.userInfo,
+      message: '密码已重置',
+      url: '/admin/user'
+    })
+  }).catch(err => {
+    res.render('admin/error', {
+      userInfo: req.userInfo,
+      message: '用户不存在',
+      url: '/admin/user'
+    })
+  })
+})
+
+router.get('/user/delete', (req, res) => {
+  var id = req.query.id
+  User.findOne({
+    _id: id
+  }).then(user => {
+    if(!user) {
+      res.render('admin/error',{
+        userInfo: req.userInfo,
+        message: '用户不存在'
+      })
+    } else {
+      return User.remove({
+        _id: id
+      })
+    }
+  }).then(result => {
+    res.render('admin/success',{
+        userInfo: req.userInfo,
+        message: '用户已删除',
+        url: '/admin/user'
+      })
+  }).catch(err => {
+    res.render('admin/error', {
+      userInfo: req.userInfo,
+      message: '用户不存在',
+      url: '/admin/user'
+    })
+  })
+})
+
 router.get('/tag', function (req, res, next) {
   var page = Number(req.query.page) || 1
   var limit = 10
