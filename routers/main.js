@@ -66,4 +66,8 @@ router.get('/view', function (req, res) {
   })
 })
 
+router.get('/resume', function (req, res, next) {
+  res.render('./resume')
+})
+
 module.exports = router
