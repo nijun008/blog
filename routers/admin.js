@@ -2,6 +2,7 @@ var express = require('express')
 var User = require('../models/User')
 var Tag = require('../models/Tag')
 var Content = require('../models/Content')
+var Comment = require('../models/Comment')
 
 var router  = express.Router()
 
@@ -441,6 +442,54 @@ router.get('/content/delete', function (req, res) {
       userInfo: req.userInfo,
       message: '文章不存在',
       url: '/admin/content'
+    })
+  })
+})
+
+router.get('/comment', (req, res) => {
+  var page = Number(req.query.page) || 1
+  var limit = 10
+  var pages = 0
+
+  Comment.count().then((count) => {
+
+    pages = Math.ceil(count / limit)
+    page = Math.min(page, pages)
+    page = Math.max(page, 1)
+    var skip = (page -1) * limit
+
+    Comment.find().limit(limit).skip(skip).populate(['content', 'user']).sort({ createTime: -1 }).then((comments) => {
+       res.render('admin/comment', {
+        userInfo: req.userInfo,
+        comments: comments,
+        page: page,
+        count: count,
+        pages: pages,
+        limit: limit
+      })
+    })
+  })
+})
+
+router.get('/comment/delete', (req, res) => {
+  var id = req.query.id
+  Comment.findOne({
+    _id: id
+  }).then(Comment => {
+    return Comment.remove({
+      _id: id
+    })
+  }).then(() => {
+    res.render('admin/success', {
+      userInfo: req.userInfo,
+      message: '评论删除成功',
+      url: '/admin/comment'
+    })
+  }).catch(err => {
+    res.render('admin/error', {
+      userInfo: req.userInfo,
+      message: '评论不存在',
+      url: '/admin/comment'
     })
   })
 })
