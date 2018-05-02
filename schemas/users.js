@@ -7,5 +7,9 @@ module.exports = new mongoose.Schema({
   isAdmin: {
     type: Boolean,
     default: false
+  },
+  createTime: {
+    type: Date,
+    default: new Date()
   }
 })

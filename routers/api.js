@@ -116,7 +116,8 @@ router.post('/user/register', function (req, res, next) {
     }
     var user = new User({
       username: username,
-      password: password
+      password: password,
+      createTime: new Date()
     })
     return user.save()
   }).then(function (newUserInfo) {
